@@ -9,7 +9,6 @@ import {
   DEAD,
   HEIGHT,
   rowToString,
-  WIDTH,
   type CellState,
   type Cells,
 } from "@/lib/conwaysGameOfLife";
@@ -83,10 +82,6 @@ export function ConwaysGameOfLife() {
         <h1 className="text-2xl font-bold text-slate-900">
           Conway&apos;s Game of Life
         </h1>
-        <p className="mt-2 text-sm text-slate-600">
-          Watch living cells evolve on a {WIDTH}×{HEIGHT} grid, one generation
-          per second when running.
-        </p>
       </header>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">

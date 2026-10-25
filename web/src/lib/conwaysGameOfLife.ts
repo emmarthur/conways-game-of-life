@@ -1,14 +1,14 @@
 /**
  * Conway's Game of Life — same rules and dimensions as
- * reference/conwaysgameoflife.py (Al Sweigart).
+ * reference/conwaysgameoflife.py
  */
 
 export const WIDTH = 79;
 export const HEIGHT = 20;
 
-/** Living cell character in the book terminal output. */
+/** Living cell character (terminal-style display). */
 export const ALIVE = "O";
-/** Dead cell character in the book terminal output. */
+/** Dead cell character (terminal-style display). */
 export const DEAD = " ";
 
 export type CellState = typeof ALIVE | typeof DEAD;
@@ -32,7 +32,7 @@ export function createEmptyCells(
   return cells;
 }
 
-/** 50/50 random grid — mirrors the book's startup nested loops. */
+/** 50/50 random starting grid. */
 export function createRandomCells(
   width = WIDTH,
   height = HEIGHT,

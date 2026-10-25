@@ -1,7 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --demo-font: "DM Sans", system-ui, sans-serif;
+  --demo-display: "Outfit", var(--demo-font);
+  --demo-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
 body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+  font-family: var(--demo-font);
+  min-height: 100vh;
+  color: #f1f5f9;
+  background: radial-gradient(ellipse at top, #064e3b 0%, #0f172a 50%, #020617 100%);
+  background-attachment: fixed;
+}
+
+@layer components {
+  .life-shell {
+    @apply relative mx-auto max-w-5xl px-4 py-10;
+  }
+
+  .life-blob {
+    @apply pointer-events-none fixed rounded-full opacity-35 blur-3xl;
+  }
+
+  .life-blob-a {
+    @apply -left-16 top-0 h-72 w-72 bg-emerald-500;
+  }
+
+  .life-blob-b {
+    @apply -right-16 bottom-0 h-80 w-80 bg-cyan-600;
+  }
+
+  .life-hero {
+    @apply mb-6 text-center;
+  }
+
+  .life-hero-icon {
+    @apply mx-auto mb-2 text-4xl;
+    filter: drop-shadow(0 0 12px rgba(52, 211, 153, 0.5));
+  }
+
+  .life-title {
+    font-family: var(--demo-display);
+    @apply text-3xl font-bold tracking-tight;
+    background: linear-gradient(90deg, #6ee7b7, #22d3ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .life-card {
+    @apply rounded-2xl p-4 shadow-2xl backdrop-blur-md;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+  }
+
+  .life-btn-run {
+    @apply rounded-lg px-4 py-2 text-sm font-semibold text-white shadow-lg transition hover:brightness-110;
+    background: linear-gradient(135deg, #059669, #0d9488);
+  }
+
+  .life-btn-ghost {
+    @apply rounded-lg border px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10;
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .life-gen-pill {
+    @apply rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide;
+    background: rgba(34, 211, 238, 0.15);
+    color: #67e8f9;
+  }
+
+  .life-grid-frame {
+    @apply overflow-x-auto rounded-xl p-[3px];
+    background: linear-gradient(
+      135deg,
+      rgba(52, 211, 153, 0.5),
+      rgba(34, 211, 238, 0.3)
+    );
+  }
+
+  .life-grid-inner {
+    @apply rounded-[10px] bg-black p-3;
+  }
+
+  .life-grid-pre {
+    font-family: var(--demo-mono);
+    @apply m-0 text-[10px] leading-[10px] text-emerald-400 sm:text-xs sm:leading-[14px];
+    text-shadow: 0 0 8px rgba(52, 211, 153, 0.35);
+  }
+
+  .life-help {
+    @apply mt-8 rounded-2xl p-5 text-sm leading-relaxed text-slate-300;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .life-help h2 {
+    font-family: var(--demo-display);
+    @apply text-lg font-semibold text-white;
+  }
+
+  .life-help h3 {
+    @apply mt-4 font-medium text-slate-200;
+  }
+
+  .life-help strong {
+    @apply text-emerald-300;
+  }
 }

@@ -23,8 +23,23 @@ function toggleCell(cells: Cells, x: number, y: number): Cells {
   return next;
 }
 
+function LoadingShell() {
+  return (
+    <div className="life-shell">
+      <div className="life-blob life-blob-a" aria-hidden="true" />
+      <div className="life-blob life-blob-b" aria-hidden="true" />
+      <header className="life-hero">
+        <div className="life-hero-icon" aria-hidden="true">
+          ◉
+        </div>
+        <h1 className="life-title">Conway&apos;s Game of Life</h1>
+        <p className="mt-2 text-sm text-slate-400">Preparing random grid…</p>
+      </header>
+    </div>
+  );
+}
+
 export function ConwaysGameOfLife() {
-  // Random grid is client-only (Math.random differs between SSR and hydration).
   const [cells, setCells] = useState<Cells | null>(null);
   const [running, setRunning] = useState(false);
   const [generation, setGeneration] = useState(0);
@@ -47,7 +62,7 @@ export function ConwaysGameOfLife() {
   const handleCellClick = useCallback(
     (x: number, y: number) => {
       if (running) return;
-      setCells((prev) => toggleCell(prev, x, y));
+      setCells((prev) => (prev ? toggleCell(prev, x, y) : prev));
     },
     [running],
   );
@@ -64,73 +79,70 @@ export function ConwaysGameOfLife() {
   }, [running]);
 
   if (cells === null) {
-    return (
-      <div className="mx-auto max-w-5xl px-4 py-10">
-        <header className="mb-6">
-          <h1 className="text-2xl font-bold text-slate-900">
-            Conway&apos;s Game of Life
-          </h1>
-          <p className="mt-2 text-sm text-slate-600">Preparing random grid…</p>
-        </header>
-      </div>
-    );
+    return <LoadingShell />;
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10">
-      <header className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">
-          Conway&apos;s Game of Life
-        </h1>
+    <div className="life-shell">
+      <div className="life-blob life-blob-a" aria-hidden="true" />
+      <div className="life-blob life-blob-b" aria-hidden="true" />
+
+      <header className="life-hero">
+        <div className="life-hero-icon" aria-hidden="true">
+          ◉
+        </div>
+        <h1 className="life-title">Conway&apos;s Game of Life</h1>
+        <p className="mt-2 text-sm text-slate-400">
+          Cellular automaton — run, step, or draw patterns
+        </p>
       </header>
 
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          onClick={() => setRunning((r) => !r)}
-          className="rounded bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-800"
-        >
-          {running ? "Pause" : "Run"}
-        </button>
-        <button
-          type="button"
-          onClick={stepOnce}
-          disabled={running}
-          className="rounded border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50 disabled:opacity-50"
-        >
-          Step once
-        </button>
-        <button
-          type="button"
-          onClick={randomize}
-          className="rounded border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
-        >
-          Randomize
-        </button>
-        <span className="text-sm text-slate-500">
-          Generation {generation}
-          {!running && " · click a cell to toggle (web extra)"}
-        </span>
+      <div className="life-card mb-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setRunning((r) => !r)}
+            className="life-btn-run"
+          >
+            {running ? "Pause" : "Run"}
+          </button>
+          <button
+            type="button"
+            onClick={stepOnce}
+            disabled={running}
+            className="life-btn-ghost disabled:opacity-50"
+          >
+            Step once
+          </button>
+          <button type="button" onClick={randomize} className="life-btn-ghost">
+            Randomize
+          </button>
+          <span className="life-gen-pill">Gen {generation}</span>
+          {!running && (
+            <span className="text-xs text-slate-500">
+              Click a cell to toggle
+            </span>
+          )}
+        </div>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-slate-800 bg-black p-3 shadow-inner">
-        <pre
-          className="m-0 font-mono text-[10px] leading-[10px] text-emerald-400 sm:text-xs sm:leading-[14px]"
-          aria-label="Game of Life grid"
-        >
-          {Array.from({ length: HEIGHT }, (_, y) => (
-            <GridRow
-              key={y}
-              y={y}
-              cells={cells}
-              running={running}
-              onToggle={handleCellClick}
-            />
-          ))}
-        </pre>
-        <p className="mt-2 font-mono text-xs text-slate-500">
-          Press Pause to stop the simulation.
-        </p>
+      <div className="life-grid-frame">
+        <div className="life-grid-inner">
+          <pre className="life-grid-pre" aria-label="Game of Life grid">
+            {Array.from({ length: HEIGHT }, (_, y) => (
+              <GridRow
+                key={y}
+                y={y}
+                cells={cells}
+                running={running}
+                onToggle={handleCellClick}
+              />
+            ))}
+          </pre>
+          <p className="mt-2 font-mono text-xs text-slate-500">
+            Press Pause to stop the simulation.
+          </p>
+        </div>
       </div>
 
       <DemoHelpSection />

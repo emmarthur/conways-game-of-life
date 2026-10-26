@@ -13,6 +13,7 @@ import {
   type Cells,
 } from "@/lib/conwaysGameOfLife";
 import { DemoHelpSection } from "@/components/DemoHelpSection";
+import { HelpJumpButton } from "@/components/HelpJumpButton";
 
 const STEP_MS = 1000;
 
@@ -95,6 +96,7 @@ export function ConwaysGameOfLife() {
         <p className="mt-2 text-sm text-slate-400">
           Cellular automaton — run, step, or draw patterns
         </p>
+        <HelpJumpButton />
       </header>
 
       <div className="life-card mb-4">
